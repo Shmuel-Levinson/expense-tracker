@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cp backend/src/models.ts frontend/src/apps/MoneyTracker/models/models.ts
+cp backend/src/models.ts frontend/src/models/models.ts

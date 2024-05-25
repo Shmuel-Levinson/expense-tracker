@@ -4,9 +4,10 @@ import checkIcon from "./assets/check.svg";
 import backspaceIcon from "./assets/backspace.svg";
 import trashIcon from "./assets/trash.svg";
 import { formatNumberWithCommas } from "./utils";
-import { createExpense, ping } from "./api";
+import { createExpense, getExpenses, ping } from "./api";
+import { User } from "./models/models";
 
-const Keypad: React.FC = () => {
+function Keypad ({ user }: { user: User }) {
 	const [displayValue, setDisplayValue] = useState("");
 	const [padType, setPadType] = useState("digits");
 	const padValues = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "."];
@@ -198,8 +199,11 @@ const Keypad: React.FC = () => {
 					onClick={async () => {
 						setDisplayValue("");
 						setPadType("digits");
-						const res = await createExpense({amount: parseInt(displayValue), user_id: 100});
-						console.log(res);
+						const res = await createExpense({
+							amount: parseInt(displayValue),
+							user_id: user.id,
+						});
+					
 					}}
 					style={{
 						// gridColumn: " 1 / span 3 ",

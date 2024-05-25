@@ -16,8 +16,7 @@ async function sanityCheck() {
 
 async function getAllUsers() {
 	try {
-		const query = `SELECT * FROM users`;
-		// const query = sql.select().from('users').toString()
+		const query = sql.select().from('users').toString();
 		const results = await client.query(query);
 		return results.rows;
 	} catch (err) {
@@ -26,15 +25,25 @@ async function getAllUsers() {
 	}
 }
 
-const initDb = async () => {
-	await client.connect();
+async function getExpensesByUserId(id: number) {
 	try {
+		const query = sql.select().from("expenses").where("user_id", id).toString();
+		const results = await client.query(query);
+		return results.rows;
+	} catch (err) {
+		console.error("Error getting expenses:", err);
+		throw err;
+	}
+}
+
+const initDb = async () => {
+	
+	try {
+		await client.connect();
 		await sanityCheck();
 	} catch (err) {
 		console.error("error executing query:", err);
-	} finally {
-		// client.end();
-	}
+	} 
 };
 
 initDb();
@@ -77,6 +86,12 @@ app.post("/expenses", async (req: Request, res: Response) => {
 app.get("/users", async (req: Request, res: Response) => {
 	const allUsers = await getAllUsers();
 	res.send(allUsers);
+});
+
+app.get("/expenses/:id", async (req: Request, res: Response) => {
+	const id = parseInt(req.params.id);
+	const allExpenses = await getExpensesByUserId(id);
+	res.send(allExpenses);
 });
 
 app.listen(port, () => {

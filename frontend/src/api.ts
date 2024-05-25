@@ -1,23 +1,24 @@
-import { Expense } from "./models/models";
+import { Expense, User } from "./models/models";
 import axios from "axios";
 
-export async function fetchExpenses(): Promise<Expense[]> {
-	const response = await fetch("/expenses");
-	return await response.json();
-}
-
-async function driver() {
-	const r = await fetchExpenses();
-	r[0];
-}
+const ENV = import.meta.env
 
 export async function ping(): Promise<object> {
-	const response = await axios.get("http://localhost:5000/ping");
+	const response = await axios.get(`http://localhost:5000/ping`);
 	return response.data;
 }
 
-//create a function that would create an expense
 export async function createExpense(expense: Expense): Promise<Expense> {
-    const response = await axios.post("http://localhost:5000/expenses", expense);
+    const response = await axios.post(`${ENV.VITE_API_URL}/expenses`, expense);
+	return response.data;
+}
+
+export async function getAllUsers(): Promise<User[]> {
+	const response = await axios.get<User[]>(`${ENV.VITE_API_URL}/users`);
+	return response.data;
+}
+
+export async function getExpenses(userId: number): Promise<Expense[]> {
+	const response = await axios.get<Expense[]>(`${ENV.VITE_API_URL}/expenses/${userId}`);
 	return response.data;
 }
