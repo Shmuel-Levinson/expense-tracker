@@ -149,7 +149,7 @@ function Keypad ({ user }: { user: User }) {
 									pointerEvents: padType === "increment" ? "auto" : "none",
 								}}
 								onClick={() =>
-									setDisplayValue((parseInt(displayValue) + value).toString())
+									setDisplayValue((parseFloat(displayValue) + value).toString())
 								}
 							>
 								+{value}
@@ -200,7 +200,7 @@ function Keypad ({ user }: { user: User }) {
 						setDisplayValue("");
 						setPadType("digits");
 						const res = await createExpense({
-							amount: parseInt(displayValue),
+							amount: parseFloat(displayValue),
 							user_id: user.id,
 						});
 					

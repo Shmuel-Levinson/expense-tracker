@@ -1,7 +1,7 @@
 import { Expense, User } from "./models/models";
 import axios from "axios";
 
-const ENV = import.meta.env
+import { ENV } from "./env";
 
 export async function ping(): Promise<object> {
 	const response = await axios.get(`http://localhost:5000/ping`);
