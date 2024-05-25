@@ -1,4 +1,4 @@
-import MoneyTracker from "./apps/MoneyTracker/MoneyTracker";
+import MoneyTracker from "./MoneyTracker";
 
 function App() {
 	return (

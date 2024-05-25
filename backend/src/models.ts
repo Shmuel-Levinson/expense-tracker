@@ -1,8 +1,19 @@
+export type User = {
+	id: string;
+	name: string;
+	email: string;
+}
+
 export type Expense = {
-	id: number;
+	id?: string;
 	amount: number;
-	description: string;
-	category: string;
-	date: Date;
+	description?: string;
+	category?: string;
+	date?: Date;
 	user_id: number;
-};
+}
+
+export type Category = {
+    name: string;
+}
+//  this is a test
